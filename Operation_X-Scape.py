@@ -209,7 +209,7 @@ def play():
             #Gravity
             if game_active:
                 keys = pygame.key.get_pressed()
-                elif keys[pygame.K_SPACE] and player_rect.bottom >= 325:
+                if keys[pygame.K_SPACE] and player_rect.bottom >= 325:
                     player_gravity = -15
                     jump_sound.play()
                 else:
