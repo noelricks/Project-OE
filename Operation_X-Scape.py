@@ -86,15 +86,6 @@ def player_animation():
         if player_index >= len(player_run): player_index = 0
         player_surf = player_run[int(player_index)]
 
-def player_d_animation():
-    global player_surf, player_index
-    if player_rect.bottom < 345:
-        player_surf = player_jump
-    else:
-        player_index += .1
-        if player_index >= len(player_duck): player_index = 0
-        player_surf = player_duck[int(player_index)]
-
 # Load high score from a file
 def load_high_score():
     try:
@@ -116,7 +107,7 @@ def get_font(size): # Returns Press-Start-2P in the desired size
 
 # Screens
 def play():
-    global game_active, reset_time, reset_time_speed, obstacle_rect_list, player_rect2, player_rect, player_surf, player_gravity, alien_surf, fly_surf, end_music, bg_music, intro_music, options_music, jump_sound, player_index, player_run, player_duck, player_jump, high_score, score, resets, ties
+    global game_active, reset_time, reset_time_speed, obstacle_rect_list, player_rect2, player_rect, player_surf, player_gravity, alien_surf, fly_surf, end_music, bg_music, intro_music, options_music, jump_sound, player_index, player_run, player_jump, high_score, score, resets, ties
 
     game_active = True
     reset_time = 0
@@ -177,17 +168,10 @@ def play():
     player_3 = pygame.image.load('images/Player_3.png').convert_alpha()
     player_4 = pygame.image.load('images/Player_4.png').convert_alpha()
     player_jump = pygame.image.load('images/Player_jump.png').convert_alpha()
-    player_d1 = pygame.image.load('images/duck1.png').convert_alpha()
-    player_d2 = pygame.image.load('images/duck2.png').convert_alpha()
-    player_d3 = pygame.image.load('images/duck3.png').convert_alpha()
-    player_d4 = pygame.image.load('images/duck4.png').convert_alpha()
     player_run = [player_1, player_2, player_3, player_4]
-    player_duck = [player_d1, player_d2, player_d3, player_d4]
     player_index = 0
     player_surf = player_run[player_index]
     player_rect = player_surf.get_rect(midbottom=(150, 345))
-    player_surf2 = player_duck[player_index]
-    player_rect2 = player_surf2.get_rect(midbottom=(150, 345))
     player_gravity = 0
 
     high_score = 0
@@ -222,9 +206,6 @@ def play():
             #Gravity
             if game_active:
                 keys = pygame.key.get_pressed()
-                if keys[pygame.K_d] and player_rect.bottom >= 345:
-                    player_d_animation()
-                    screen.blit(player_surf2, player_rect2)
                 elif keys[pygame.K_SPACE] and player_rect.bottom >= 325:
                     player_gravity = -15
                     jump_sound.play()
@@ -292,10 +273,6 @@ def play():
                 i = 0
             i -= speed
             score = display_score()
-
-            #Blue Overlay (Nice to have feature but not a priority that would change colors of screen when player reaches a certain distance)
-            """overlay.fill((35, 0, 255, 128))  # Adjust alpha (128 for 50% transparency)
-            screen.blit(overlay, (0, 0))"""
 
             # Player Gravity
             player_gravity += 0.58
@@ -450,9 +427,6 @@ def options():
 
         pygame.display.update()
 
-        """     OPTIONS_TEXT = get_font(35).render("Audio is muted.", True, "Red")
-                OPTIONS_RECT = OPTIONS_TEXT.get_rect(center=(400, 250))
-                SCREEN.blit(OPTIONS_TEXT, OPTIONS_RECT)"""
 def main_menu():
     bg_music.stop()
     options_music.stop()
