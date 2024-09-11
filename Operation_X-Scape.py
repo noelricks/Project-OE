@@ -14,8 +14,10 @@ screen_height = 400
 overlay = pygame.Surface((screen_width, screen_height), pygame.SRCALPHA)
 screen = pygame.display.set_mode((800, 400))  # Screen Size
 window = pygame.display.set_mode((screen_width, screen_height))
+
 global m
 m = 0
+
 #Initial Game Properties
 pygame.init()
 pygame.display.set_caption('Operation_X-Scape')  # Screen name
@@ -24,6 +26,7 @@ test_font = pygame.font.Font('fonts/Pixeltype.ttf', 50)
 small_test_font = pygame.font.Font('fonts/Pixeltype.ttf', 35)
 game_active = False
 
+#Audio
 intro_music = pygame.mixer.Sound('audio/intro.wav')
 options_music = pygame.mixer.Sound('audio/options.wav')
 bg_music = pygame.mixer.Sound('audio/Audio3.wav')
@@ -345,7 +348,7 @@ def play():
                     if event.type == pygame.MOUSEBUTTONDOWN:
                         if PLAY_BACK.checkForInput(PLAY_MOUSE_POS):
                             main_menu()
-                if score == high_score and resets < 1 and ties == 0:
+                if score == high_score and resets < 1 and ties == 0: #Ensures that scores are not labeled "High Scores" if the current score ties with the high score.
                     def display_text1(text, x, y):
                             text_surface = test_font.render(text, True, 'White')
                             text_rect = text_surface.get_rect(center=(x, y))
@@ -358,12 +361,7 @@ def play():
 
         pygame.display.update()
         clock.tick(80)  # fps control
-
-def options():
-    intro_music.stop()
-    bg_music.stop()
-    options_music.play(loops = -1)
-    
+#Opens the options page    
 def options():
     global m
     audio_muted = False  # Flag to track mute state
@@ -426,7 +424,7 @@ def options():
                     main_menu()
 
         pygame.display.update()
-
+#Opens the main menu page
 def main_menu():
     bg_music.stop()
     options_music.stop()
